@@ -1,0 +1,103 @@
+org: mauriciocoder
+app: covid-favor
+# We are using JEST for testing: https://jestjs.io/docs/en/getting-started.html - npm test
+service: covid-favor-app-api
+
+# Create an optimized package for our functions
+package:
+  individually: true
+
+# Create our resources with separate CloudFormation templates
+resources:
+  # API Gateway Handler
+  - ${file(resources/api-gateway-handler.yml)}
+
+plugins:
+  - serverless-bundle # Package our functions with Webpack
+  - serverless-offline
+  - serverless-dotenv-plugin # Load .env as environment variables
+
+provider:
+  name: aws
+  runtime: nodejs10.x
+  stage: prod
+  region: us-east-1
+
+  # These environment variables are made available to our functions
+  # under process.env.
+  environment:
+    offerTableName: offer
+    userAccountTableName: userAccount
+    stripeSecretKey: ${env:STRIPE_SECRET_KEY}
+
+  # 'iamRoleStatements' defines the permission policy for the Lambda function.
+  # In this case Lambda functions are granted with permissions to access DynamoDB.
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:DescribeTable
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+      Resource: "arn:aws:dynamodb:us-east-1:*:*"
+
+functions:
+  # Defines an HTTP API endpoint that calls the main function in create.js
+  # - path: url path is /offer
+  # - method: POST request
+  # - cors: enabled CORS (Cross-Origin Resource Sharing) for browser cross
+  #     domain api call
+  # - authorizer: authenticate using the AWS IAM role
+  create-offer:
+    handler: functions/offer/create.main
+    events:
+      - http:
+          path: offer
+          method: post
+          cors: true
+          authorizer: aws_iam
+
+  # Defines an HTTP API endpoint that calls the main function in create.js
+  # - path: url path is /user-account
+  # - method: POST request
+  # - cors: enabled CORS (Cross-Origin Resource Sharing) for browser cross
+  #     domain api call
+  # - authorizer: authenticate using the AWS IAM role
+  create-user-account:
+    handler: functions/user-account/create.main
+    events:
+      - http:
+          path: user-account
+          method: post
+          cors: true
+          authorizer: aws_iam
+
+  # Defines an HTTP API endpoint that calls the main function in create.js
+  # - path: url path is /user-account/read
+  # - method: POST request
+  # - cors: enabled CORS (Cross-Origin Resource Sharing) for browser cross
+  #     domain api call
+  # - authorizer: authenticate using the AWS IAM role
+  read-user-account:
+    handler: functions/user-account/read.main
+    events:
+      - http:
+          path: user-account/read
+          method: post
+          cors: true
+          authorizer: aws_iam
+
+  # Defines an HTTP API endpoint that calls the main function in read.js
+  # - path: url path is /notes/{id}
+  # - method: GET request
+  read:
+    handler: functions/note/read.main
+    events:
+      - http:
+          path: notes/{id}
+          method: get
+          cors: true
+          authorizer: aws_iam

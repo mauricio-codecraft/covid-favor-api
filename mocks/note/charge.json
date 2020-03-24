@@ -1,0 +1,8 @@
+{
+    "body": "{\"notesQty\":21, \"source\": \"tok_visa\"}",
+    "requestContext": {
+      "identity": {
+        "cognitoIdentityId": "USER-SUB-1234"
+      }
+    }
+  }
