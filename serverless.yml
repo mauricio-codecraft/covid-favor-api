@@ -26,7 +26,7 @@ provider:
   # These environment variables are made available to our functions
   # under process.env.
   environment:
-    offerTableName: offer
+    helpTableName: help
     userAccountTableName: userAccount
     stripeSecretKey: ${env:STRIPE_SECRET_KEY}
 
@@ -46,16 +46,16 @@ provider:
 
 functions:
   # Defines an HTTP API endpoint that calls the main function in create.js
-  # - path: url path is /offer
+  # - path: url path is /help
   # - method: POST request
   # - cors: enabled CORS (Cross-Origin Resource Sharing) for browser cross
   #     domain api call
   # - authorizer: authenticate using the AWS IAM role
-  create-offer:
-    handler: functions/offer/create.main
+  create-help:
+    handler: functions/help/create.main
     events:
       - http:
-          path: offer
+          path: help
           method: post
           cors: true
           authorizer: aws_iam
@@ -85,7 +85,7 @@ functions:
     handler: functions/user-account/read.main
     events:
       - http:
-          path: user-account/read
+          path: user-account
           method: get
           cors: true
           authorizer: aws_iam

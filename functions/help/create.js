@@ -1,4 +1,3 @@
-import uuid from "uuid";
 import * as dynamodb from "../../utils/dynamodb";
 import { success, failure } from "../../utils/http";
 
@@ -6,16 +5,21 @@ export async function main(event, context) {
   const data = JSON.parse(event.body);
   console.log('event.requestContext.identity = ', event.requestContext.identity);
   const params = {
-    TableName: process.env.offerTableName,
+    TableName: process.env.helpTableName,
     Item: {
       userId: event.requestContext.identity.cognitoIdentityId,
-      offerId: uuid.v1(),
-      description: data.description,
-      fullName: data.fullName,
-      phoneNumber: data.phoneNumber,
-      city: data.city,
+      isAssigned: false,
+      isOffer: data.isOffer,
       region: data.region,
+      asigneeFullName: ' ',
+      asigneePhoneNumber: ' ',
+      city: data.city,
+      state: data.state,
+      description: data.description,
+      firstName: data.firstName,
+      lastName: data.lastName,
       neighbourhood: data.neighbourhood,
+      phoneNumber: data.phoneNumber,
       createdAt: Date.now()
     }
   };
