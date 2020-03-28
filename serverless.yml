@@ -60,6 +60,51 @@ functions:
           cors: true
           authorizer: aws_iam
 
+  # Defines an HTTP API endpoint that calls the main function in list.js
+  # - path: url path is /help
+  # - method: GET request
+  # - cors: enabled CORS (Cross-Origin Resource Sharing) for browser cross
+  #     domain api call
+  # - authorizer: authenticate using the AWS IAM role
+  list-help:
+    handler: functions/help/list.main
+    events:
+      - http:
+          path: help
+          method: get
+          cors: true
+          authorizer: aws_iam
+
+  # Defines an HTTP API endpoint that calls the main function in list.js
+  # - path: url path is help
+  # - method: DELETE request
+  # - cors: enabled CORS (Cross-Origin Resource Sharing) for browser cross
+  #     domain api call
+  # - authorizer: authenticate using the AWS IAM role
+  delete-help:
+    handler: functions/help/delete.main
+    events:
+      - http:
+          path: help
+          method: delete
+          cors: true
+          authorizer: aws_iam
+
+  # Defines an HTTP API endpoint that calls the main function in list.js
+  # - path: url path is help
+  # - method: POST request
+  # - cors: enabled CORS (Cross-Origin Resource Sharing) for browser cross
+  #     domain api call
+  # - authorizer: authenticate using the AWS IAM role
+  accept-help:
+    handler: functions/help/accept.main
+    events:
+      - http:
+          path: help/accept
+          method: post
+          cors: true
+          authorizer: aws_iam
+
   # Defines an HTTP API endpoint that calls the main function in create.js
   # - path: url path is /user-account
   # - method: POST request

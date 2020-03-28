@@ -1,4 +1,5 @@
 import * as dynamodb from "../../utils/dynamodb";
+import uuid from "uuid";
 import { success, failure } from "../../utils/http";
 
 export async function main(event, context) {
@@ -7,6 +8,7 @@ export async function main(event, context) {
   const params = {
     TableName: process.env.helpTableName,
     Item: {
+      helpId: uuid.v1(),
       userId: event.requestContext.identity.cognitoIdentityId,
       isAssigned: false,
       isOffer: data.isOffer,
@@ -20,6 +22,7 @@ export async function main(event, context) {
       lastName: data.lastName,
       neighbourhood: data.neighbourhood,
       phoneNumber: data.phoneNumber,
+      status: data.isOffer == 'true' ? ' ' : 'unassigned',
       createdAt: Date.now()
     }
   };
