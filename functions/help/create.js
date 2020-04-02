@@ -10,7 +10,6 @@ export async function main(event, context) {
     Item: {
       helpId: uuid.v1(),
       userId: event.requestContext.identity.cognitoIdentityId,
-      isAssigned: false,
       isOffer: data.isOffer,
       region: data.region,
       asigneeFullName: ' ',

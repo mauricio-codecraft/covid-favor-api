@@ -44,6 +44,12 @@ provider:
         - dynamodb:DeleteItem
       Resource: "arn:aws:dynamodb:us-east-1:*:*"
 
+  # These are the usage plan for throttling
+  usagePlan:
+    throttle:
+        burstLimit: 2
+        rateLimit: 1
+
 functions:
   # Defines an HTTP API endpoint that calls the main function in create.js
   # - path: url path is /help
@@ -131,18 +137,6 @@ functions:
     events:
       - http:
           path: user-account
-          method: get
-          cors: true
-          authorizer: aws_iam
-
-  # Defines an HTTP API endpoint that calls the main function in read.js
-  # - path: url path is /notes/{id}
-  # - method: GET request
-  read:
-    handler: functions/note/read.main
-    events:
-      - http:
-          path: notes/{id}
           method: get
           cors: true
           authorizer: aws_iam
