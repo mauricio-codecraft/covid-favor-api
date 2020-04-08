@@ -1,0 +1,17 @@
+{
+    "asigneeFullName": " ",
+    "asigneePhoneNumber": " ",
+    "city": "Timbó",
+    "createdAt": 1585959540595,
+    "description": "Posso receber ligações para conversar, posso ajudar doando alimentos ou roupas. Não posso sair porque sou do grupo de risco.",
+    "firstName": "Gustavo ",
+    "helpId": "e1f51520-7609-11ea-8f36-f71f0b57b18e",
+    "isOffer": true,
+    "lastName": "Litwinski",
+    "neighbourhood": "Capitais",
+    "phoneNumber": "41987992626",
+    "region": "Blumenau",
+    "state": "SC",
+    "status": "unassigned",
+    "userId": "us-east-1:88bf6276-6e42-4e55-b311-464078109b08"
+}
