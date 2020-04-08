@@ -1,0 +1,15 @@
+Resources:
+  userAccount:
+    Type: AWS::DynamoDB::Table
+    DeletionPolicy : Retain
+    Properties:
+      TableName: userAccount
+      AttributeDefinitions:
+        - AttributeName: userId
+          AttributeType: S
+      KeySchema:
+        - AttributeName: userId
+          KeyType: HASH
+      ProvisionedThroughput:
+        ReadCapacityUnits: 1
+        WriteCapacityUnits: 1

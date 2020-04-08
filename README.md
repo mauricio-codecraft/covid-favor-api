@@ -140,3 +140,30 @@ To [override the default config](https://eslint.org/docs/user-guide/configuring)
 ---
 
 This repo is maintained by [Anomaly Innovations](https://anoma.ly); makers of [Seed](https://seed.run) and [Serverless Stack](https://serverless-stack.com).
+
+### MY notes!!!
+
+- You should install serverless offline to run your application:
+
+``` bash
+$ npm i -g serverless-offline
+```
+
+- Initialize DynamoDB - this initializes DynamoDB offline in your project folder
+
+``` bash
+$ sls dynamodb install
+```
+
+- Create the dynamodb admin. This gives us a good GUI to view our DynamoDB tables
+
+``` bash
+$ npm install dynamodb-admin -g
+$ dynamodb-admin
+```
+
+- Start the offline application
+
+``` bash
+$ sls offline start --stage dev
+```

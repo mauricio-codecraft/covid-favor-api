@@ -20,6 +20,8 @@
     "serverless-offline": "^5.3.3"
   },
   "dependencies": {
+    "serverless-dynamodb-client": "0.0.2",
+    "serverless-dynamodb-local": "^0.2.35",
     "stripe": "^8.20.0",
     "uuid": "^3.4.0"
   }
