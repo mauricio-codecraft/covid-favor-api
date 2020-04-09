@@ -167,3 +167,9 @@ $ dynamodb-admin
 ``` bash
 $ sls offline start --stage dev
 ```
+
+- production deploy
+
+``` bash
+$ sls deploy --stage prod
+```
