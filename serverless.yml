@@ -11,16 +11,37 @@ package:
 resources:
   # API Gateway Handler
   - ${file(resources/api-gateway-handler.yml)}
+  # DynamoDb Handler
+  - ${file(resources/dynamodb-handler.yml)}
 
 plugins:
   - serverless-bundle # Package our functions with Webpack
+  - serverless-dynamodb-local
   - serverless-offline
   - serverless-dotenv-plugin # Load .env as environment variables
+
+custom:
+  authorizer:
+    dev: 
+    prod: aws_iam
+  dynamodb:
+    stages: dev
+    start:
+      port: 8000 # always se port 8000, otherwise serverless-dynamodb-client will not find
+      migrate: true # creates tables from serverless config
+      seed: true # determines which data to onload
+    seed:
+      domain:
+        sources:
+          - table: userAccount
+            sources: [./resources/migrations/user-account-v0.json]
+          - table: help
+            sources: [./resources/migrations/help-v1.json]
 
 provider:
   name: aws
   runtime: nodejs10.x
-  stage: prod
+  stage: ${opt:stage, 'dev'}
   region: us-east-1
 
   # These environment variables are made available to our functions
@@ -28,7 +49,6 @@ provider:
   environment:
     helpTableName: help
     userAccountTableName: userAccount
-    stripeSecretKey: ${env:STRIPE_SECRET_KEY}
 
   # 'iamRoleStatements' defines the permission policy for the Lambda function.
   # In this case Lambda functions are granted with permissions to access DynamoDB.
@@ -64,7 +84,7 @@ functions:
           path: help
           method: post
           cors: true
-          authorizer: aws_iam
+          authorizer: ${self:custom.authorizer.${opt:stage, self:provider.stage}}
 
   # Defines an HTTP API endpoint that calls the main function in list.js
   # - path: url path is /help
@@ -79,7 +99,7 @@ functions:
           path: help
           method: get
           cors: true
-          authorizer: aws_iam
+          authorizer: ${self:custom.authorizer.${opt:stage, self:provider.stage}}
 
   # Defines an HTTP API endpoint that calls the main function in list.js
   # - path: url path is help
@@ -94,7 +114,7 @@ functions:
           path: help
           method: delete
           cors: true
-          authorizer: aws_iam
+          authorizer: ${self:custom.authorizer.${opt:stage, self:provider.stage}}
 
   # Defines an HTTP API endpoint that calls the main function in list.js
   # - path: url path is help
@@ -109,7 +129,7 @@ functions:
           path: help/accept
           method: post
           cors: true
-          authorizer: aws_iam
+          authorizer: ${self:custom.authorizer.${opt:stage, self:provider.stage}}
 
   # Defines an HTTP API endpoint that calls the main function in create.js
   # - path: url path is /user-account
@@ -124,7 +144,7 @@ functions:
           path: user-account
           method: post
           cors: true
-          authorizer: aws_iam
+          authorizer: ${self:custom.authorizer.${opt:stage, self:provider.stage}}
 
   # Defines an HTTP API endpoint that calls the main function in create.js
   # - path: url path is /user-account/read
@@ -139,4 +159,4 @@ functions:
           path: user-account
           method: get
           cors: true
-          authorizer: aws_iam
+          authorizer: ${self:custom.authorizer.${opt:stage, self:provider.stage}}

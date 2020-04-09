@@ -1,0 +1,11 @@
+{
+    "firstName": "Andre",
+    "lastName": "Agassi",
+    "createdAt": 1586344160708,
+    "phoneNumber": "11111111111",
+    "city": "Acrelândia",
+    "neighbourhood": "Novo Mundo",
+    "state": "AC",
+    "region": "Rio Branco",
+    "userId": "offlineContext_cognitoIdentityId"
+}

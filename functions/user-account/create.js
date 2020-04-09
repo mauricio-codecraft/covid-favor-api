@@ -3,7 +3,6 @@ import { success, failure } from "../../utils/http";
 
 export async function main(event, context) {
   const data = JSON.parse(event.body);
-  console.log('event.requestContext.identity = ', event.requestContext.identity);
   const params = {
     TableName: process.env.userAccountTableName,
     Item: {

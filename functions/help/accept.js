@@ -2,7 +2,6 @@ import * as dynamodb from "../../utils/dynamodb";
 import { success, failure } from "../../utils/http";
 
 export async function main(event, context) {
-  console.log('event = ', event);
   let data = JSON.parse(event.body);
   console.log('data = ', data);
   let loggedUserId = event.requestContext.identity.cognitoIdentityId;

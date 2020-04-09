@@ -1,0 +1,33 @@
+Resources:
+  userAccount:
+    Type: AWS::DynamoDB::Table
+    DeletionPolicy : Retain
+    Properties:
+      TableName: userAccount
+      AttributeDefinitions:
+        - AttributeName: userId
+          AttributeType: S
+      KeySchema:
+        - AttributeName: userId
+          KeyType: HASH
+      ProvisionedThroughput:
+        ReadCapacityUnits: 1
+        WriteCapacityUnits: 1
+  help:
+    Type: AWS::DynamoDB::Table
+    DeletionPolicy : Retain
+    Properties:
+      TableName: help
+      AttributeDefinitions:
+        - AttributeName: region
+          AttributeType: S
+        - AttributeName: createdAt
+          AttributeType: N  
+      KeySchema:
+        - AttributeName: region
+          KeyType: HASH
+        - AttributeName: createdAt
+          KeyType: RANGE
+      ProvisionedThroughput:
+        ReadCapacityUnits: 1
+        WriteCapacityUnits: 1
