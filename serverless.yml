@@ -36,7 +36,7 @@ custom:
           - table: userAccount
             sources: [./resources/migrations/user-account-v0.json]
           - table: help
-            sources: [./resources/migrations/help-v1.json]
+            sources: [./resources/migrations/help-v1.json, ./resources/migrations/help-v2.json]
 
 provider:
   name: aws

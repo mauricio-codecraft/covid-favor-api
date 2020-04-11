@@ -22,7 +22,8 @@ export async function main(event, context) {
       neighbourhood: data.neighbourhood,
       phoneNumber: data.phoneNumber,
       status: data.isOffer == 'true' ? ' ' : 'unassigned',
-      createdAt: Date.now()
+      createdAt: Date.now(),
+      range: data.range
     }
   };
 
